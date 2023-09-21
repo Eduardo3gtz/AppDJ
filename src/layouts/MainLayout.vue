@@ -10,10 +10,8 @@
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />
-        <!-- 
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title> -->
+
+        <!-- <q-toolbar-title>  Appsss </q-toolbar-title> -->
       </q-toolbar>
     </q-header>
 

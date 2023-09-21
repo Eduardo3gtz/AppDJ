@@ -1,0 +1,8 @@
+{
+  "appId": "com.saiterp.appdj",
+  "appName": "appdj",
+  "webDir": "dist/spa",
+  "server": {
+    "androidScheme": "https"
+  }
+}
