@@ -44,5 +44,5 @@ See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-
 
 <!-- Para hot reload -->
 
-// "url": "http://192.168.1.12:9000/",
-// "cleartext": true
+<!-- // "url": "http://192.168.1.12:9000/",
+// "cleartext": true -->

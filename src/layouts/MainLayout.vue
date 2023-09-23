@@ -1,41 +1,55 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
+  <q-layout view="hHh lpR fFf">
+    <q-header flat elevation="0">
+      <q-toolbar class="bg-white" elevatio="0">
         <q-btn
-          flat
+          class="bg-red"
           dense
           round
           icon="menu"
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />
-
-        <!-- <q-toolbar-title>  Appsss </q-toolbar-title> -->
       </q-toolbar>
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
         <q-item-label header> Essential Links </q-item-label>
-
-        <EssentialLink
+        <q-btn to="/panelview">PANEL</q-btn>
+        <!-- <EssentialLink
           v-for="link in essentialLinks"
           :key="link.title"
           v-bind="link"
-        />
+        /> -->
       </q-list>
     </q-drawer>
 
     <q-page-container>
       <router-view />
     </q-page-container>
+
+    <!-- <q-footer bordered class="bg-grey-3 text-primary">
+      <q-tabs
+        no-caps
+        active-color="primary"
+        indicator-color="transparent"
+        class="text-grey-8"
+        v-model="tab"
+      >
+        <q-tab name="images" label="Images" />
+        <q-tab name="videos" label="Videos" />
+        <q-tab name="articles" label="Articles" />
+      </q-tabs>
+    </q-footer> -->
   </q-layout>
 </template>
 
 <script>
 import { defineComponent, ref } from "vue";
-import EssentialLink from "components/EssentialLink.vue";
+// import EssentialLink from "components/EssentialLink.vue";
+
+const tab = ref("images");
 
 const linksList = [
   {
@@ -85,9 +99,9 @@ const linksList = [
 export default defineComponent({
   name: "MainLayout",
 
-  components: {
-    EssentialLink,
-  },
+  // components: {
+  //   EssentialLink,
+  // },
 
   setup() {
     const leftDrawerOpen = ref(false);
