@@ -11,7 +11,7 @@
         aria-label="Menu"
       />
       <q-space></q-space>
-      <p class="q-mr-md datos text-white q-mt-md">Nueva playlist:</p>
+      <p class="q-mr-md datos text-white q-mt-md">Playlist:</p>
       <q-space></q-space>
     </q-toolbar>
     <div class="row">
@@ -35,60 +35,6 @@
               <q-icon name="star" color="yellow" />
             </q-item-section>
           </q-item>
-        </q-card>
-
-        <q-card class="q-mt-md roundedcard2 bg-grey-3">
-          <q-separator></q-separator>
-
-          <q-input
-            class="q-mx-md q-mt-md"
-            outlined
-            v-model="nomplay"
-            label="Nombre de la playlist"
-          ></q-input>
-
-          <q-input
-            outlined
-            type="textarea"
-            class="q-mx-md q-mt-md"
-            v-model="desplay"
-            label="Mensaje"
-          ></q-input>
-
-          <q-input
-            outlined
-            label="Fecha"
-            class="q-mt-md q-mx-md"
-            v-model="fecha"
-            mask="date"
-            :rules="['date']"
-          >
-            <template v-slot:append>
-              <q-icon name="event" class="cursor-pointer">
-                <q-popup-proxy
-                  cover
-                  transition-show="scale"
-                  transition-hide="scale"
-                >
-                  <q-date v-model="fecha">
-                    <div class="row items-center justify-end">
-                      <q-btn v-close-popup label="Close" color="primary" flat />
-                    </div>
-                  </q-date>
-                </q-popup-proxy>
-              </q-icon>
-            </template>
-          </q-input>
-
-          <div class="row justify-center">
-            <q-btn
-              label="Agregar canciones"
-              color="indigo-4"
-              push
-              to="listaCanciones"
-              class="q-mb-md"
-            ></q-btn>
-          </div>
         </q-card>
       </div>
     </div>
@@ -114,7 +60,6 @@ fecha.value =
   ("0" + (m.getUTCMonth() + 1)).slice(-2) +
   "/" +
   ("0" + m.getUTCDate()).slice(-2);
-const date = ref("2019/02/01");
 
 // const redirigirAOtraVista = () => {
 //   router.push({ name: "newSesion" }); // Reemplaza '/otra-vista' con la ruta real de tu vista

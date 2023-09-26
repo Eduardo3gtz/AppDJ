@@ -58,6 +58,32 @@
           </q-card-section>
         </q-card-section>
       </q-card>
+
+      <q-card
+        @click="irUnirme"
+        class="my-card bg-grey-8 roundedcard q-mt-md"
+        flat
+        bordered
+      >
+        <q-card-section horizontal>
+          <q-card-section class="q-pt-xs">
+            <!-- <div class="text-overline">Overline</div> -->
+            <div class="text-h5 q-mt-sm q-mb-xs text-white fuente">Modo DJ</div>
+            <div class="text-caption text-white">
+              Visualiza y reproduce la playlist de las fiestas.
+            </div>
+          </q-card-section>
+
+          <q-card-section class="col-5 flex flex-center">
+            <q-img
+              fit="contain"
+              height="100px"
+              class="rounded-borders"
+              src="../assets/dj.png"
+            />
+          </q-card-section>
+        </q-card-section>
+      </q-card>
     </div>
   </q-page>
 </template>
