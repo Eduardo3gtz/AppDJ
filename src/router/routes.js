@@ -5,11 +5,19 @@ const routes = [
     children: [
       { path: "", component: () => import("pages/IndexPage.vue") },
       {
-        path: "/panelview",
-        name: "panelView",
-        component: () => import("src/pages/panelView.vue"),
+        path: "/panelgrupo",
+        name: "panelGrupo",
+        component: () => import("src/pages/panelGrupo.vue"),
         // meta: { libre: true },
       },
+
+      {
+        path: "/panelinv",
+        name: "panelInv",
+        component: () => import("src/pages/panelInv.vue"),
+        // meta: { libre: true },
+      },
+
       {
         path: "/newsesion",
         name: "newSesion",
@@ -26,6 +34,30 @@ const routes = [
         path: "/listacanciones",
         name: "listaCanciones",
         component: () => import("src/pages/sesiones/listaCanciones.vue"),
+        // meta: { libre: true },
+      },
+      {
+        path: "/nuevacuenta",
+        name: "nuevaCuenta",
+        component: () => import("src/pages/login/nuevaCuenta.vue"),
+        // meta: { libre: true },
+      },
+      {
+        path: "/catcanciones",
+        name: "catCanciones",
+        component: () => import("src/pages/canciones/catCanciones.vue"),
+        // meta: { libre: true },
+      },
+      {
+        path: "/newcancion/:idcancion",
+        name: "newCancion",
+        component: () => import("src/pages/canciones/newCancion.vue"),
+        // meta: { libre: true },
+      },
+      {
+        path: "/votosview",
+        name: "votosView",
+        component: () => import("src/pages/canciones/votosView.vue"),
         // meta: { libre: true },
       },
     ],

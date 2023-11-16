@@ -9,12 +9,84 @@
           src="../assets/party2.png"
         />
         <!-- <p>PartyMix</p> -->
-        <q-input class="q-mx-lg" label="Correo" filled></q-input>
+        <q-input
+          class="q-mx-lg"
+          v-model="correo"
+          label="Correo"
+          filled
+        ></q-input>
         <div class="col q-mx-lg q-mt-md">
-          <q-btn push color="indigo" to="panelview" class="full-width"
+          <q-btn
+            push
+            @click="errorCorreo"
+            color="indigo"
+            v-if="
+              correo != 'eduardo3gtz@gmail.com' &&
+              correo != 'neftali_03@outlook.es' &&
+              correo != 'vemiliogro@hotmail.com' &&
+              correo != 'vanessay.hdzc@gmail.com' &&
+              correo != 'leoge03@outlook.com'
+            "
+            class="full-width"
             >Login</q-btn
           >
-          <q-btn push class="full-width q-mt-md">Crear cuenta</q-btn>
+          <!-- ADMIN -->
+          <q-btn
+            push
+            @click="bienvenida"
+            color="red"
+            v-if="
+              correo === 'eduardo3gtz@gmail.com' ||
+              correo === 'neftali_03@outlook.es'
+              // correo === 'vemiliogro@hotmail.com' ||
+              // correo === 'vanessay.hdzc@gmail.com' ||
+              // correo === 'leoge03@outlook.com'
+            "
+            to="panelgrupo"
+            class="full-width"
+            >Login</q-btn
+          >
+          <!-- INVITADO -->
+
+          <q-btn
+            push
+            @click="bienvenida"
+            color="blue"
+            v-if="
+              // correo === 'eduardo3gtz@gmail.com' ||
+              // correo === 'neftali_03@outlook.es'
+              correo === 'vemiliogro@hotmail.com' ||
+              correo === 'vanessay.hdzc@gmail.com' ||
+              correo === 'leoge03@outlook.com'
+            "
+            to="panelinv"
+            class="full-width"
+            >Login</q-btn
+          >
+
+          <!-- <q-btn
+            push
+            @click="bienvenida"
+            color="indigo"
+            v-if="
+              correo === 'eduardo3gtz@gmail.com' ||
+              correo === 'neftali_03@outlook.es' ||
+              correo === 'vemiliogro@hotmail.com' ||
+              correo === 'vanessay.hdzc@gmail.com' ||
+              correo === 'leoge03@outlook.com'
+            "
+            to="panelview"
+            class="full-width"
+            >Login</q-btn
+          > -->
+
+          <q-btn push to="nuevacuenta" class="full-width q-mt-md">
+            Crear cuenta
+          </q-btn>
+
+          <div class="row justify-center q-mt-md">
+            <p>Version 1.1</p>
+          </div>
         </div>
 
         <!-- <q-card class="my-card roundedcard" flat bordered>
@@ -41,12 +113,34 @@
   </q-page>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup>
+import { ref, onMounted, watch, computed } from "vue";
+//notify
+import { useQuasar } from "quasar";
+const $q = useQuasar();
+const niveles = ref(["DJ", "Usuario"]);
 
-export default defineComponent({
-  name: "IndexPage",
-});
+// const nivel = ref("");
+const correo = ref("");
+
+const errorCorreo = () => {
+  $q.notify({
+    message: "Correo no encontrado.",
+    color: "yellow-10",
+    icon: "announcement",
+    timeout: 1500,
+  });
+};
+
+const bienvenida = () => {
+  $q.notify({
+    message: "Bienvenido.",
+    color: "green",
+    icon: "home",
+
+    timeout: 1500,
+  });
+};
 </script>
 
 <style scoped>

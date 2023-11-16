@@ -1,8 +1,31 @@
 <template>
-  <q-page class="">
+  <q-page class="bg-grey-3">
     <div class="q-pa-md">
-      <div></div>
-      <q-card
+      <div class="row">
+        <div class="row"></div>
+        <div class="row"></div>
+      </div>
+      <div class="col-12 col-md-12">
+        <q-card class="textogeneral roundedcard q-mt-md" flat>
+          <q-item>
+            <q-item-section>
+              <q-item-label class="" style="font-size: 25px"
+                >Bienvenido a <b class="text-indigo">Party Mixx!</b>
+              </q-item-label>
+
+              <!-- <q-item-label class="" style="font-size: 25px"
+                >Hola, Banda MS!
+              </q-item-label> -->
+              <q-item-label caption lines="2" style="font-size: 14px">
+                10/13/30
+                <!-- 29 de Junio del 2023 -->
+                <q-icon name="today"></q-icon
+              ></q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-card>
+      </div>
+      <!-- <q-card
         @click="irCrear"
         class="my-card bg-indigo roundedcard q-mt-xl"
         flat
@@ -10,7 +33,6 @@
       >
         <q-card-section horizontal>
           <q-card-section class="q-pt-xs">
-            <!-- <div class="text-overline">Overline</div> -->
             <div class="text-h5 q-mt-sm q-mb-xs text-white fuente">
               Crear playlist
             </div>
@@ -29,9 +51,9 @@
             />
           </q-card-section>
         </q-card-section>
-      </q-card>
+      </q-card> -->
 
-      <q-card
+      <!-- <q-card
         @click="irUnirme"
         class="my-card bg- roundedcard q-mt-md"
         flat
@@ -39,7 +61,6 @@
       >
         <q-card-section horizontal>
           <q-card-section class="q-pt-xs">
-            <!-- <div class="text-overline">Overline</div> -->
             <div class="text-h5 q-mt-sm q-mb-xs fuente">
               Unirme a una playlist
             </div>
@@ -57,9 +78,9 @@
             />
           </q-card-section>
         </q-card-section>
-      </q-card>
+      </q-card> -->
 
-      <q-card
+      <!-- <q-card
         @click="irUnirme"
         class="my-card bg-grey-8 roundedcard q-mt-md"
         flat
@@ -67,7 +88,6 @@
       >
         <q-card-section horizontal>
           <q-card-section class="q-pt-xs">
-            <!-- <div class="text-overline">Overline</div> -->
             <div class="text-h5 q-mt-sm q-mb-xs text-white fuente">Modo DJ</div>
             <div class="text-caption text-white">
               Visualiza y reproduce la playlist de las fiestas.
@@ -83,8 +103,72 @@
             />
           </q-card-section>
         </q-card-section>
+      </q-card> -->
+      <q-card
+        @click="irUnirme"
+        class="my-card bg-grey-8 roundedcard q-mt-md"
+        flat
+        bordered
+      >
+        <q-card-section horizontal>
+          <q-card-section class="q-pt-xs">
+            <div class="text-h5 q-mt-sm q-mb-xs text-white fuente">
+              Lista de canciones
+            </div>
+            <div class="text-caption text-white">
+              Agrega tus canciones para que la gente vote.
+            </div>
+          </q-card-section>
+
+          <q-card-section class="col-5 flex flex-center">
+            <q-img
+              fit="contain"
+              height="100px"
+              class="rounded-borders"
+              src="../assets/composicion.png"
+            />
+          </q-card-section>
+        </q-card-section>
+      </q-card>
+
+      <q-card
+        @click="irVotos"
+        class="my-card bg-blue-5 roundedcard q-mt-md"
+        flat
+        bordered
+      >
+        <q-card-section horizontal>
+          <q-card-section class="q-pt-xs">
+            <div class="text-h5 q-mt-sm q-mb-xs text-white fuente">
+              Modo Fiesta
+            </div>
+            <div class="text-caption text-white">
+              Entra y ve las canciones que quiere el publico.
+            </div>
+          </q-card-section>
+
+          <q-card-section class="col-5 flex flex-center">
+            <q-img
+              fit="contain"
+              height="100px"
+              class="rounded-borders"
+              src="../assets/grupo.png"
+            />
+          </q-card-section>
+        </q-card-section>
       </q-card>
     </div>
+    <q-item exact active clickable v-ripple>
+      <q-btn
+        class="full-width"
+        push
+        to="/"
+        color="primary"
+        icon="start"
+        label="Salir"
+      />
+    </q-item>
+    <!-- @click="salir" -->
   </q-page>
 </template>
 
@@ -101,8 +185,16 @@ const irCrear = () => {
   router.push({ name: "newSesion" }); // Reemplaza '/otra-vista' con la ruta real de tu vista
 };
 
+const salir = () => {
+  router.push({ name: "" }); // Reemplaza '/otra-vista' con la ruta real de tu vista
+};
+
 const irUnirme = () => {
-  router.push({ name: "catSesiones" }); // Reemplaza '/otra-vista' con la ruta real de tu vista
+  router.push({ name: "catCanciones" }); // Reemplaza '/otra-vista' con la ruta real de tu vista
+};
+
+const irVotos = () => {
+  router.push({ name: "votosView" }); // Reemplaza '/otra-vista' con la ruta real de tu vista
 };
 </script>
 <style scoped>
