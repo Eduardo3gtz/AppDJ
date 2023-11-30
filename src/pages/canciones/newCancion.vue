@@ -1,5 +1,5 @@
 <template>
-  <q-page class="bg-indigo">
+  <q-page class="bg-grey-8">
     <q-toolbar class="bg-transparent" elevatio="0">
       <q-btn
         class="text-white"

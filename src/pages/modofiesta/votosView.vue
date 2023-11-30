@@ -3,7 +3,7 @@
     <q-toolbar class="bg-transparent" elevatio="0">
       <q-btn
         class="text-white"
-        to="panelgrupo"
+        @click="$router.go(-1)"
         dense
         flat
         round
@@ -23,24 +23,30 @@
         aria-label="Menu"
       /> -->
     </q-toolbar>
+    <div class="row justify-center">
+      <!-- <div class="col"> -->
+      <p class="datos text-white q-mt-md">
+        Esta es la lista oficial de canciones de la fiesta, disfruta!
+      </p>
+      <!-- </div> -->
+    </div>
     <div class="row">
       <div class="col">
         <q-card class="q-ma-md roundedcard">
-          <q-input class="q-mx-md" v-model="filter" label="Buscar canción">
+          <!-- <q-input class="q-mx-md" v-model="filter" label="Buscar canción">
             <template v-slot:append>
               <q-icon name="search" />
             </template>
-          </q-input>
+          </q-input> -->
           <!-- <q-input label="Buscar playlist" class="q-mx-md"></q-input> -->
         </q-card>
 
         <q-table
           :filter="filter"
           separator="cell"
-          @row-click="editar"
           style="height: auto"
           title="Playlist"
-          :rows="canciones"
+          :rows="cancionessel"
           :columns="columns"
           row-key="name"
           flat
@@ -51,6 +57,8 @@
 
         <q-card class="q-mb-md q-mt-md">
           <q-list bordered>
+            <!-- <p class="">TOP ARTISTAS</p> -->
+            <q-separator></q-separator>
             <q-item>
               <q-item-section>
                 <q-item-label>Grupo Frontera</q-item-label>
@@ -65,57 +73,38 @@
                 <q-icon name="star" color="yellow" />
               </q-item-section>
             </q-item>
-
-            <!-- <q-item clickable v-ripple>
-              <q-item-section avatar>
-                <q-avatar>
-                  <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
-                </q-avatar>
+            <q-separator></q-separator>
+            <q-item>
+              <q-item-section>
+                <q-item-label>Los Angeles Azules</q-item-label>
+                <!-- <q-item-label caption lines="2"
+                  >Secondary line text. Lorem ipsum dolor sit amet, consectetur
+                  adipiscit elit.</q-item-label
+                > -->
               </q-item-section>
-              <q-item-section>Image avatar</q-item-section>
+
+              <q-item-section side top>
+                <!-- <q-item-label caption>5 min ago</q-item-label> -->
+                <q-icon name="star" color="grey" />
+              </q-item-section>
             </q-item>
 
-            <q-item clickable v-ripple>
-              <q-item-section avatar>
-                <q-avatar square>
-                  <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
-                </q-avatar>
+            <q-item>
+              <q-item-section>
+                <q-item-label>Banda MS</q-item-label>
+                <!-- <q-item-label caption lines="2"
+                  >Secondary line text. Lorem ipsum dolor sit amet, consectetur
+                  adipiscit elit.</q-item-label
+                > -->
               </q-item-section>
-              <q-item-section>Image square avatar</q-item-section>
-            </q-item>
 
-            <q-item clickable v-ripple>
-              <q-item-section avatar>
-                <q-avatar rounded>
-                  <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
-                </q-avatar>
+              <q-item-section side top>
+                <!-- <q-item-label caption>5 min ago</q-item-label> -->
+                <q-icon name="star" color="orange-3" />
               </q-item-section>
-              <q-item-section>Image rounded avatar</q-item-section>
-            </q-item> -->
+            </q-item>
           </q-list>
-          <!-- <q-input class="q-mx-md" v-model="filter" label="Buscar canción">
-            <template v-slot:append>
-              <q-icon name="search" />
-            </template>
-          </q-input> -->
-          <!-- <q-input label="Buscar playlist" class="q-mx-md"></q-input> -->
         </q-card>
-
-        <!-- <q-table
-          class="q-mt-md"
-          :filter="filter"
-          separator="cell"
-          @row-click="editar"
-          style="height: auto"
-          title="Top Artistas"
-          :rows="canciones"
-          :columns="columns"
-          row-key="name"
-          flat
-          dense
-          v-model:pagination="pagination"
-          :rows-per-page-options="[0]"
-        /> -->
       </div>
     </div>
   </q-page>
@@ -125,15 +114,19 @@
 import { ref, onMounted, watch, computed } from "vue";
 import { useQuasar } from "quasar";
 import { api } from "boot/axios";
-import { useRouter } from "vue-router";
-
+import { useRouter, useRoute } from "vue-router";
+import { useLoginStore } from "stores/loginStore";
+const loginStore = useLoginStore();
 const router = useRouter();
+const route = useRoute();
 const $q = useQuasar();
 
 const loading = ref(false);
 
+const idfiesta = ref(0);
 const filter = ref("");
-const canciones = ref([]);
+const cantante = ref("");
+const cancionessel = ref([]);
 const pagination = ref([]);
 
 const columns = [
@@ -151,13 +144,13 @@ const columns = [
     sortable: true,
     align: "left",
   },
-  {
-    name: "cantante",
-    label: "Autor",
-    field: "cantante",
-    sortable: true,
-    align: "left",
-  },
+  // {
+  //   name: "cantante",
+  //   label: "Autor",
+  //   field: "cantante",
+  //   sortable: true,
+  //   align: "left",
+  // },
   {
     name: "votos",
     label: "Votos",
@@ -187,27 +180,35 @@ onMounted(() => {
 });
 
 const consultar = async () => {
-  canciones.value = [];
+  cancionessel.value = [];
   // loading.value = true;
 
   try {
-    const request = await api.get("canciones.list");
+    let params = {};
+    params.idfiesta = parseInt(route.params.idfiesta);
+    const request = await api.get(
+      `cancionessel.votos/${route.params.idfiesta}`,
+      {
+        params: {
+          ...params,
+          limit: 1000,
+        },
+      }
+    );
     // console.log("result", request);
     if (request.data.result != null) {
       // console.log("resul", request.result);
-      canciones.value = request.data.result;
+      cancionessel.value = request.data.result;
       loading.value = false;
-      // canciones.value.avatar = 'https://redleaf.pro/vacaciones/logotienda.png'
+      // cancionessel.value.avatar = 'https://redleaf.pro/vacaciones/logotienda.png'
     } else {
-      // canciones.value = []
+      // cancionessel.value = []
     }
   } catch (error) {
-    console.warn("Error al tratar de obtener canciones, " + error.toString());
+    console.warn(
+      "Error al tratar de obtener cancionessel, " + error.toString()
+    );
   }
-};
-
-const editar = (evt, row) => {
-  router.push({ path: "newcancion/" + row.idcancion });
 };
 
 // const redirigirAOtraVista = () => {

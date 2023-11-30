@@ -5,21 +5,39 @@
         <q-card class="q-mx-md roundedcard">
           <div class="row">
             <div class="col q-mx-lg q-mt-md">
+              <div class="row justify-center">
+                <p style="font-size: 20px">Crea tu cuenta!</p>
+              </div>
               <q-input
                 class="q-mx- q-mt-md"
                 outlined=""
-                v-model="correo"
-                label="Correo"
+                v-model="nomuser"
+                label="Nombre de usuario"
+              ></q-input>
+              <q-input
+                class="q-mx- q-mt-md"
+                outlined=""
+                v-model="email"
+                label="Email"
+              ></q-input>
+              <q-input
+                class="q-mx- q-mt-md"
+                outlined=""
+                v-model="password"
+                label="Contraseña"
               ></q-input>
               <q-select
-                v-model="nivel"
-                outlined=""
-                class="q-mt-md"
+                v-model="modelnivel"
                 :options="niveles"
-                label="Rol"
+                label="Nivel"
+                dense
+                outlined
+                class="q-mr-md"
               />
+
               <q-btn
                 push
+                @click="crearCuenta"
                 color="indigo"
                 to="panelview"
                 class="full-width q-mt-md"
@@ -65,10 +83,142 @@
 
 <script setup>
 import { ref, onMounted, watch, computed } from "vue";
-const niveles = ref(["DJ", "Usuario"]);
+import { sha256 } from "js-sha256";
+import { useQuasar } from "quasar";
+import { useRouter, useRoute } from "vue-router";
+import { useLoginStore } from "stores/loginStore";
+import { usuarioswebApi } from "../../api-web/usuariosweb";
 
-const nivel = ref("");
-const correo = ref("");
+const loginStore = useLoginStore();
+const router = useRouter();
+const route = useRoute();
+const $q = useQuasar();
+
+// const nivel = ref("");
+// const nivel = ref([""]);
+const nomuser = ref("");
+const email = ref("");
+const password = ref("");
+// const email = ref("");
+
+const loading = ref(false);
+const nmodo = ref(1);
+
+const modelnivel = ref({
+  nomnivel: "",
+  nivel: 8,
+  label: "",
+  value: 8,
+});
+
+const nivel = ref(15);
+const nomnivel = ref("INVIT");
+
+const niveles = ref([
+  {
+    nomnivel: "CANTA",
+    label: "Banda",
+    nivel: 5,
+    value: 5,
+  },
+  {
+    nomnivel: "INVIT",
+    label: "Invitado",
+    nivel: 15,
+    value: 15,
+  },
+]);
+
+const validainfo = () => {
+  // console.log('ubica', ubica.value)
+  if (nivel.value == "") {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+const crearCuenta = async () => {
+  if (validainfo() == true) {
+    $q.notify({
+      color: "red",
+      position: "bottom",
+      message: "Debes llenar el correo del usuario",
+      icon: "report_problem",
+    });
+    return;
+  }
+  // Formar documentoData (payload)
+  const payloadData = {
+    nomuser: nomuser.value.trim(),
+    email: email.value.trim().toLocaleLowerCase(),
+    password: sha256(password.value),
+    // nivel: "INVIT",
+    nivel: modelnivel.value.nomnivel,
+    estatus: 2,
+  };
+
+  // console.log("payloadData", payloadData);
+  loading.value = true;
+
+  /// modo nuevo.
+  if (nmodo.value === 1) {
+    await usuarioswebApi
+      .addUsuariosweb(payloadData)
+      .then(() => {
+        loading.value = false;
+        $q.notify({
+          color: "green",
+          position: "bottom",
+          message: "El usuario ha sido agregado correctamente.",
+          icon: "done_outline",
+        });
+
+        router.push({ name: "loginView" });
+      })
+      .catch((err) => {
+        loading.value = false;
+        console.log(err);
+        $q.notify({
+          color: "red",
+          position: "bottom",
+          message: "Problemas al grabar nuevo usuario.",
+          icon: "report_problem",
+        });
+      });
+  }
+
+  // if (nmodo.value === 2) {
+  //   // console.log("idcancion", idcancion.value);
+  //   payloadData.idcancion = idcancion.value;
+  //   // payloadData.idusuariosweb = idusuariosweb.value
+
+  //   // this.cargarInfo(this.$route.params);
+  //   cargarinfo();
+
+  //   idcancion.value = await cancionesselApi
+  //     .updateCancionsel(idcancion.value, payloadData)
+  //     .then(() => {
+  //       loading.value = false;
+  //       $q.notify({
+  //         color: "green",
+  //         position: "top",
+  //         message: "La canción ha sido actualizado correctamente.",
+  //         icon: "done_outline",
+  //       });
+  //       router.push({ name: "catCanciones" });
+  //     })
+  //     .catch((err) => {
+  //       loading.value = false;
+  //       $q.notify({
+  //         color: "red",
+  //         position: "top",
+  //         message: "Problemas al actualizar la canción.",
+  //         icon: "report_problem",
+  //       });
+  //     });
+  // }
+};
 </script>
 
 <style scoped>

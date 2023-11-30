@@ -54,7 +54,7 @@
       </q-card> -->
 
       <q-card
-        @click="irUnirme"
+        @click="elegirCan"
         class="my-card bg- roundedcard q-mt-md"
         flat
         bordered
@@ -102,7 +102,7 @@
           </q-card-section>
         </q-card-section>
       </q-card> -->
-      <q-card
+      <!-- <q-card
         @click="irUnirme"
         class="my-card bg-grey-8 roundedcard q-mt-md"
         flat
@@ -127,7 +127,7 @@
             />
           </q-card-section>
         </q-card-section>
-      </q-card>
+      </q-card> -->
 
       <q-card
         @click="irUnirme"
@@ -156,6 +156,16 @@
         </q-card-section>
       </q-card>
     </div>
+    <q-item exact active clickable v-ripple>
+      <q-btn
+        class="full-width"
+        push
+        to="/"
+        color="primary"
+        icon="start"
+        label="Salir"
+      />
+    </q-item>
   </q-page>
 </template>
 
@@ -177,7 +187,11 @@ const salir = () => {
 };
 
 const irUnirme = () => {
-  router.push({ name: "catCanciones" }); // Reemplaza '/otra-vista' con la ruta real de tu vista
+  router.push({ name: "votosView" }); // Reemplaza '/otra-vista' con la ruta real de tu vista
+};
+
+const elegirCan = () => {
+  router.push({ name: "elegirCancion" }); // Reemplaza '/otra-vista' con la ruta real de tu vista
 };
 </script>
 <style scoped>

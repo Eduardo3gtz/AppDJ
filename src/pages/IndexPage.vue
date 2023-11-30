@@ -34,7 +34,7 @@
           <q-btn
             push
             @click="bienvenida"
-            color="red"
+            color="indigo"
             v-if="
               correo === 'eduardo3gtz@gmail.com' ||
               correo === 'neftali_03@outlook.es'
@@ -51,7 +51,7 @@
           <q-btn
             push
             @click="bienvenida"
-            color="blue"
+            color="indigo"
             v-if="
               // correo === 'eduardo3gtz@gmail.com' ||
               // correo === 'neftali_03@outlook.es'
